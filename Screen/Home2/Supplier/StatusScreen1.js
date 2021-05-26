@@ -28,6 +28,8 @@ const StatusScreen1 = ({navigation,route}) => {
                        
                     } catch (error) {
                         console.log(error)
+                        setloader(false)
+                            alert('Network Error')
                     }
                 })();
                 break;
@@ -43,6 +45,8 @@ const StatusScreen1 = ({navigation,route}) => {
                            
                         } catch (error) {
                             console.log(error)
+                            setloader(false)
+                            alert('Network Error')
                         }
                     })();
                 break;

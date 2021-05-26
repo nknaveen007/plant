@@ -7,6 +7,7 @@ import instance from '../Api/api';
 import LoadView from '../Components/LoadView';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { AuthContext } from '../context/Context';
+import {useToast} from "react-native-fast-toast";
 
 
 
@@ -19,6 +20,7 @@ const OtpScreen = ({navigation,route}) => {
     const [value3,setvalue3]=useState(null)
     const [value4,setvalue4]=useState(null)
     const [loader, setloader] = useState(false)
+    const toast = useToast()
  
     const input1=useRef()
     const input2=useRef()
@@ -33,17 +35,17 @@ const OtpScreen = ({navigation,route}) => {
            return <AppLoading />;
          } 
 
+         const iostoast=(value)=>{
+            toast.show(value, {
+                duration: 3000,
+                style: { paddingHorizontal:20,borderRadius:20,backgroundColor:'#f2f0f0',bottom:'-13%',paddingVertical:15},
+                textStyle: { fontSize: 14,color:'black'},
+                
+              });
+        }
+
          
-const setStringValue = async (value) => {
-    try {
-      await AsyncStorage.setItem('token', value)
-      
-    } catch(e) {
-      // save error
-    }
-  
-    console.log('Done.')
-  }
+
     
 
     const Validation=async()=>{
@@ -84,6 +86,8 @@ const setStringValue = async (value) => {
                      
                     
                 } catch (error) {
+                    setloader(false)
+                alert('Network Error')
                     
                 }
                
@@ -101,14 +105,34 @@ const setStringValue = async (value) => {
         }else{
             if(value1 && value2 && value3 && value4 !==''){
                 const otp=`${value1}${value2}${value3}${value4}`
-               const result =await instance.post('/optconfirm',{
-                  email:email,
-                  otp:otp
-               })
-               navigation.navigate('Home')
-               console.log(result.data.message)
+                setloader(true)
+                try {
+                    const result =await instance.post('/optconfirm',{
+                        email:email,
+                        otp:otp
+                     })
+                     if(result.data.status==='true'){
+                        await AsyncStorage.setItem('token', 'true')
+                        iostoast(`${result.data.message}`)
+                       
+                          setloader(false)
+                          signIn('hii')
+                     }else{
+                      iostoast(`${result.data.message}`)
+                         
+                          setloader(false)
+                     }
+
+                     
+                    
+                } catch (error) {
+                    setloader(false)
+                alert('Network Error')
+                    
+                }
             }else{
-                console.log('please enter the OTP')
+                iostoast('please enter the OTP')
+                
             }
         }
        

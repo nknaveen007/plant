@@ -20,6 +20,7 @@ import IcLocationScreen from './Screen/Initallation/Location/IcLocationScreen';
 import IcMapScreen from './Screen/Initallation/Location/IcMapScreen';
 import { AuthContext, Calander, CalanderContext, Context} from './context/Context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {ToastProvider} from "react-native-fast-toast";
 
 
 
@@ -140,13 +141,15 @@ function App() {
 
 
   return (
-   
+   <ToastProvider>
       <Stack.Navigator initialRouteName={'Login'}>
+        
      
         <Stack.Screen name="Login" component={LoginScreen} options={{headerShown:false}}/>
         <Stack.Screen name="Otp" component={OtpScreen} options={{headerShown:false}}/>
-
+        
       </Stack.Navigator>
+      </ToastProvider>
     
   );
 }

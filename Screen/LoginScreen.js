@@ -1,4 +1,4 @@
-import React,{useState,useEffect} from 'react'
+import React,{useState,useEffect,useref} from 'react'
 import { StyleSheet, Text, View,ImageBackground,Image,ToastAndroid,Platform, TouchableOpacity } from 'react-native'
 import TextInputView from '../Components/Login/TextInput'
 import { Button,Checkbox } from 'react-native-paper';
@@ -8,6 +8,7 @@ import validator from 'validator'
 import instance from '../Api/api';
 import LoadView from '../Components/LoadView';
 import * as WebBrowser from 'expo-web-browser';
+import {useToast} from "react-native-fast-toast";
 
 const LoginScreen = ({navigation}) => {
      
@@ -15,13 +16,21 @@ const LoginScreen = ({navigation}) => {
     const [passwordText, setpasswordText] = useState('')
     const [loader, setloader] = useState(false)
     const [checked, setChecked] = React.useState(false);
+    const toast = useToast()
 
     let [fontsLoaded] = useFonts({
         Lato_900Black,Lato_400Regular,Lato_700Bold,Lato_700Bold_Italic,Lato_400Regular_Italic
          });
        
-        
-
+        const iostoast=(value)=>{
+            toast.show(value, {
+                duration: 3000,
+                style: { paddingHorizontal:20,borderRadius:20,backgroundColor:'#f2f0f0',bottom:'-13%',paddingVertical:15},
+                textStyle: { fontSize: 14,color:'black'},
+                
+              });
+        }
+      
 
          const Validation=async()=>{
              if(Platform.OS==='android'){
@@ -61,6 +70,8 @@ const LoginScreen = ({navigation}) => {
                                 
                             } catch (error) {
                                 console.log(error)
+                                setloader(false)
+                                alert('Network Error')
                             }
                           }else{
                             ToastAndroid.showWithGravityAndOffset(
@@ -90,50 +101,65 @@ const LoginScreen = ({navigation}) => {
                         25,
                         50
                       );
-                       console.log()
+                       
                    }
                 }else{
-                    ToastAndroid.showWithGravityAndOffset(
+                      ToastAndroid.showWithGravityAndOffset(
                         'Please enter the email',
                         ToastAndroid.LONG,
                         ToastAndroid.BOTTOM,
                         25,
                         50
                       );
-                    console.log()
+                   
+                    
                 }
              }else{
                 if(emailText!==''){
                     let value=validator.isEmail(emailText)
                    if(value){
                       if(passwordText!==''){
-                          if(checked){
+                        if(checked){
+                            setloader(true)
                             try {
                                 const result =await instance.post('/userLogin',{
                                     email:emailText,
                                     password:passwordText
                                 })
+                                console.log(result.data)
                                if(result.data.status==='true'){
-                                   console.log(result.data)
-                               }else{
+                                   iostoast(`${result.data.message}`)
                                   
-                                console.log(result.data.message)
+                                     setloader(false)
+                                     navigation.navigate('Otp',{email:emailText})
+                               }else{
+                                   iostoast(`${result.data.message}`)
+                                   setloader(false)
+                                
                                   
                                }
                                 
                             } catch (error) {
                                 console.log(error)
+                                setloader(false)
+                                alert('Network Error')
                             }
+                          }else{
+                              iostoast('Please Select Privacy Policy')
+                            
                           }
+                         
                         
                       }else{
-                          console.log('please enter the password')
+                         iostoast('please enter the password')
                       }
                    }else{
-                       console.log('please enter the valid email')
+                    iostoast('please enter the valid email')
+                       
                    }
                 }else{
-                    console.log('please enter the email')
+                    iostoast('please enter the email')
+                    
                 }
              }
            

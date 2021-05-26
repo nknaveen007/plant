@@ -23,6 +23,8 @@ const SupplierScreen = ({navigation}) => {
                 setloader(false)
             } catch (error) {
                 console.log(error)
+                setloader(false)
+                alert('Network Error')
             }
         })();
        

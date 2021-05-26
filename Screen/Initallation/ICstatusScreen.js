@@ -30,9 +30,12 @@ const ICstatusScreen = ({navigation}) => {
                 })
                 setmarked(markObject)
                  setloader(false)
+                 
 
             } catch (error) {
                 console.log(error)
+                setloader(false)
+                alert('Network Error')
             }
         })();
        

@@ -32,6 +32,8 @@ const DespatchesScreen = ({navigation}) => {
 
             } catch (error) {
                 console.log(error)
+                setloader(false)
+                alert('Network Error')
             }
         })();
        
