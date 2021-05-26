@@ -1,7 +1,7 @@
 import { Lato_400Regular, Lato_400Regular_Italic, Lato_700Bold, Lato_700Bold_Italic } from '@expo-google-fonts/lato';
 import React,{useState,useEffect} from 'react'
 import { StyleSheet, Text, View,SafeAreaView,Modal,Pressable, Image } from 'react-native'
-import MapView,{Marker} from 'react-native-maps';
+import MapView,{Marker,PROVIDER_GOOGLE} from 'react-native-maps';
 import { DataTable } from 'react-native-paper';
 
 
@@ -70,7 +70,9 @@ const MapComponentView = ({filterData,statedata}) => {
         <View style={{width:'100%',height:'100%'}}>
         {show?
 <View style={{width:'100%',height:'100%'}}>
-<MapView  style={{width:'100%',height:'100%'}}
+<MapView 
+provider={PROVIDER_GOOGLE}
+style={{width:'100%',height:'100%'}}
 
 initialRegion={{
   latitude: 20.5937,
