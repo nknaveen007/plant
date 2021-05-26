@@ -1,3 +1,4 @@
+import { Lato_400Regular, Lato_700Bold } from '@expo-google-fonts/lato';
 import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import {Divider} from 'react-native-paper';
@@ -5,16 +6,26 @@ import {Divider} from 'react-native-paper';
 const LocationData = ({state, city, Planned,location, installed}) => {
     return (
         <View style={{width:'90%',alignSelf:'center',marginTop:'7%'}}>
-            <View style={{flexDirection:'row',justifyContent:'space-between'}}>
-                <Text style={styles.text}>State : {state}</Text>
-                <Text style={styles.text}>City : {city}</Text>
-                <Text style={styles.text}>Location : {location}</Text>
+            <View style={styles.textrowview}>
+               <Text style={styles.text}>City  /  State </Text>
+               <Text style={styles.textvalue}>: {city}  / {state}</Text>
             </View>
-
-            <View style={{flexDirection:'row',justifyContent:'space-between',marginTop:'3%'}}>
-                <Text style={styles.text}>Plants Planned : {state}</Text>
-                <Text style={styles.text}>Installed : {city}</Text>
+            <View style={styles.textrowview}>
+               <Text style={styles.text}>Location  </Text>
+               <Text style={styles.textvalue}>:  {location}</Text>
             </View>
+        <View style={{flexDirection:'row',justifyContent:'space-between'}}>
+            <View style={styles.textrowview}>
+               <Text style={styles.text}>Plants Planned  </Text>
+               <Text style={styles.textvalue}>:  {Planned}</Text>
+            </View>
+            <View style={styles.textrowview}>
+               <Text style={styles.text}>Installed </Text>
+               <Text style={styles.textvalue}>:  {installed}</Text>
+            </View>
+         </View>
+           
+          
             <Divider style={{top:10,borderWidth:0.5,borderColor:'lightgray'}}/>
         </View>
     )
@@ -24,7 +35,16 @@ export default LocationData
 
 const styles = StyleSheet.create({
     text:{
-        fontSize:13,
+        fontSize:14,
+        fontFamily:'Lato_700Bold',
+        width:110
+    },
+    textrowview:{
+        flexDirection:'row',
+        alignItems:'center',
+        marginTop:'3%'
+    },
+    textvalue:{
         fontFamily:'Lato_400Regular'
     }
 })

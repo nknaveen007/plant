@@ -1,29 +1,42 @@
-import React from 'react'
-import { Image, StyleSheet, Text, View } from 'react-native'
-import { EvilIcons,Ionicons } from '@expo/vector-icons'; 
+import React, { useContext,useEffect } from 'react'
+import { Image, StyleSheet, Text, View,Alert,BackHandler } from 'react-native'
+import { EvilIcons,Ionicons ,FontAwesome} from '@expo/vector-icons'; 
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { AuthContext } from '../context/Context';
 
 
-const HeaderView = ({navigation,Title,arrow,tata}) => {
+
+const HeaderView = ({navigation,Title,log,arrow}) => {
+    const {signOut}=useContext(AuthContext)
+
+    
+        const logOut = () => {
+          Alert.alert("Hold on!", "Are you sure you want to Logout?", [
+            {
+              text: "Cancel",
+              onPress: () => null,
+              style: "cancel"
+            },
+            { text: "YES", onPress: () => signOut() }
+          ]);
+          return true;
+        };
+    
+       
+      
+   
   
     return (
         <View>
             <View style={[styles.headerContainer,{justifyContent:'center'}]}>
-                {arrow?null:
-                <View style={{position:'absolute',left:'5%',bottom:'25%'}}>
-                     <Ionicons name="arrow-back-sharp" size={24} color="#fff" onPress={()=>navigation.goBack()}/>    
+                {log?
+                <View style={{position:'absolute',right:'5%',bottom:'25%'}}>
+                    <FontAwesome onPress={()=>logOut()} name="power-off" size={24} color="#fff" />
+                </View>:null}
+                {arrow?null:<View style={{position:'absolute',left:'5%',bottom:'25%'}}>
+                <Ionicons onPress={()=>navigation.goBack()} name="arrow-back-sharp" size={24} color="#fff" />
                 </View>}
               <Text style={{color:'#fff',fontSize:20,fontFamily:'Lato_700Bold'}}>{Title}</Text>
-              {tata?<View style={{position:'absolute',right:'5%',bottom:'20%'}}>
-                <Image source={require('../assets/tatalogo1.png')} style={{width:25,height:17,alignSelf:'center'}}/>
-                <View style={{flexDirection:'row',marginTop:5}}>
-                <Image source={require('../assets/t.png')} style={styles.teximage}/>
-                <Image source={require('../assets/a.png')} style={styles.teximage}/>
-                <Image source={require('../assets/t.png')} style={styles.teximage}/>
-                <Image source={require('../assets/a.png')} style={styles.teximage}/>
-                </View>
-              </View>:null}
-                    
-                   
                 
               </View>
             

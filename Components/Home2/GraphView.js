@@ -1,55 +1,76 @@
 import React,{useEffect, useState, useRef} from 'react'
-import { StyleSheet, Text, useWindowDimensions, View,Animated } from 'react-native'
+import { StyleSheet, Text, useWindowDimensions, View,Animated,ScrollView } from 'react-native'
 import {LineChart} from "react-native-chart-kit";
 import { Card,} from 'react-native-paper';
+import instance from '../../Api/api';
+import LoadView from '../LoadView';
 
-const GraphView = () => {
+const GraphView = ({date,a1,a2,a3}) => {
 
     const {width,height}=useWindowDimensions()
+    const [loader, setloader] = useState(true)
+    const [yaxis, setyaxis] = useState(false)
     
-const [arr1, setarr1] = useState([0])
-const [arr2, setarr2] = useState([0])
-  useEffect(() => {
+   useEffect(() => {
+  /*  let ar1=[]
+    let ar2=[]
+    let ar3=[]
+    data.map((value,index)=>{                   // we can use this comment in previous screen and pass the data to the component
+      date1.push(value.date_wise)
+      ar1.push(parseInt(value.as_per_plan))
+      ar2.push(parseInt(value.anticipated))
+      ar3.push(parseInt(value.contract_requirement))
+    })
 
+    setdate(date1)
+    setarr1(ar1)
+    setarr2(ar2)
+    setarr3(ar3)   */
     setTimeout(() => {
-        setarr1([0,10,12,18,40])
-        setarr2([10,25,23,5,10])
-        
-    }, 100);
+      setloader(false)
+      
+     
+   }, 500);
+   }, [])
 
-  }, []);
+  
 
    
     return (
-        <View style={{marginTop:'5%',width:width*0.95,marginHorizontal:'2%'}}>
+        <ScrollView style={{marginTop:'5%',width:'100%',marginHorizontal:'2%',}} horizontal>
 
-
+{loader?<LoadView/>:
   
   <LineChart
     
     data={{
-        labels: ["5/13/21", "5/28/21", "6/12/21", "6/27/21", "7/12/21"],
+        labels: date,
   
         datasets: [
           {
-            data: arr1,
+            data: a1,
             color: (opacity = 1) => `#0094D8`, // optional
               strokeWidth: 2 // optional
           },
           {
-              data: arr2,
+              data: a2,
                 color: (opacity = 1) => `#EB008A`, // optional
               strokeWidth: 2 // optional
-          }
+          },
+          {
+            data: a3,
+              color: (opacity = 1) => `gray`, // optional
+            strokeWidth: 2 // optional
+        },
+       
         ]
       }}
-    width={width*0.95} // from react-native
+      width={1000} // from react-native
     height={height*0.35}
-    yAxisInterval={10} // optional, defaults to 1
     withDots
     withShadow
     chartConfig={{
-
+      
       backgroundColor: "#fff",
       backgroundGradientFrom: "#fff",
       backgroundGradientTo: "#fff",
@@ -67,14 +88,15 @@ const [arr2, setarr2] = useState([0])
       }
     }}
     bezier
+    
     style={{
       marginVertical: 8,
       borderRadius: 10,
-      
+      overflow:'scroll'
 
     }}
-  />
-</View>
+  />}
+</ScrollView>
     )
 }
 

@@ -1,7 +1,9 @@
-import React,{useState} from 'react'
+import React,{useState,useContext} from 'react'
 import { StyleSheet, Text, View,TouchableOpacity } from 'react-native'
+import { StateContext } from '../../context/Context'
 
 const TopSelectorView = ({navigation,heading}) => {
+    const [proMaintainer, setproMaintainer]=useContext(StateContext)
 
     const [overall, setoverall] = useState(true)
     const [text1, settext1] = useState(false)
@@ -10,52 +12,50 @@ const TopSelectorView = ({navigation,heading}) => {
     const [text4, settext4] = useState(false)
 
     const click=(value)=>{
-       switch (value) {
-           case 'overall':
-               setoverall(true)
-               settext1(false)
-               settext2(false)
-               settext3(false)
-               settext4(false)
-               break;
-
-           case 'text1':
-                setoverall(false)
-                settext1(true)
-                settext2(false)
-                settext3(false)
-                settext4(false)
-                break;  
-                
-                case 'text2':
-                setoverall(false)
-                settext1(false)
-                settext2(true)
-                settext3(false)
-                settext4(false)
-                break; 
-
-                case 'text3':
-                setoverall(false)
-                settext1(false)
-                settext2(false)
-                settext3(true)
-                settext4(false)
-                break; 
-
-                case 'text4':
-                setoverall(false)
+        switch (value) {
+            case 'overall':
+                setproMaintainer('overall')
+                setoverall(true)
                 settext1(false)
                 settext2(false)
                 settext3(false)
-                settext4(true)
-                break; 
-
-       
-           default:
-               break;
-       }
-    }
+                settext4(false)
+                break;
+ 
+            case 'text1':
+                setproMaintainer('lot_1')
+                 setoverall(false)
+                 settext1(true)
+                 settext2(false)
+                 settext3(false)
+                 settext4(false)
+                 break;  
+                 
+                 case 'text2':
+                    setproMaintainer('lot_2')
+                 setoverall(false)
+                 settext1(false)
+                 settext2(true)
+                 settext3(false)
+                 settext4(false)
+                 break; 
+ 
+                 case 'text3':
+                    setproMaintainer('lot_3')
+                 setoverall(false)
+                 settext1(false)
+                 settext2(false)
+                 settext3(true)
+                 settext4(false)
+                 break; 
+ 
+                 
+ 
+        
+            default:
+                break;
+        }
+     }
 
     return (
         <View>
@@ -77,10 +77,7 @@ const TopSelectorView = ({navigation,heading}) => {
                     <Text  style={[styles.text],{color:text3?'#fff':'#949494'}}>Lot 3</Text>
                </TouchableOpacity>
 
-               <TouchableOpacity onPress={()=>click('text4')} style={[styles.textView,{backgroundColor:text4?'#3a7dda':null}]}>
-                    <Text  style={[styles.text],{color:text4?'#fff':'#949494'}}>Lot 4</Text>
-               </TouchableOpacity>
-              
+               
               
          </View>
 
@@ -103,7 +100,7 @@ const styles = StyleSheet.create({
     text:{
          width:50,
          alignSelf:'center',
-         fontSize:16,
+         fontSize:17,
          width:'100%',
          textAlign:'center',
          fontFamily:'Lato_400Regular'
@@ -111,11 +108,11 @@ const styles = StyleSheet.create({
         
     },
     textView:{
-        width:'19%',
+        width:'20%',
         alignItems:'center',
         borderRadius:20,
-        height:25,
-        paddingVertical:1
+        height:28,
+        paddingVertical:4
     },
     HeadingText:{
         alignSelf:'center',

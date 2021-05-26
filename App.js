@@ -1,9 +1,8 @@
-import * as React from 'react';
-import { StyleSheet, Text, View ,SafeAreaView,Platform} from 'react-native'
+import React,{useEffect,useState,useContext,useMemo} from 'react';
+import { StyleSheet, Text, View ,SafeAreaView,Platform,ActivityIndicator} from 'react-native'
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import {DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
-import IntroScreen from './Screen/IntroScreen';
 import LoginScreen from './Screen/LoginScreen';
 import OtpScreen from './Screen/OtpScreen';
 import HomeScreen from './Screen/HomeScreen';
@@ -19,6 +18,12 @@ import InstallationScreen from './Screen/Initallation/InstallationScreen';
 import ICstatusScreen from './Screen/Initallation/ICstatusScreen';
 import IcLocationScreen from './Screen/Initallation/Location/IcLocationScreen';
 import IcMapScreen from './Screen/Initallation/Location/IcMapScreen';
+import { AuthContext, Calander, CalanderContext, Context} from './context/Context';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+
+
+
 
 
 
@@ -36,17 +41,77 @@ const HomeStack =createStackNavigator();
 
 
 const main=()=>{
+ 
+  const [isLoading, setIsLoading] = useState(true);
+ const [userToken, setUserToken] = useState(null); 
+ 
+
+
+
+ AsyncStorage.getItem('token').then(value=>{
+  setUserToken(value) 
+})
+
+
+ const authContext = useMemo(() => ({
+
+  signIn: (number) => {
+    AsyncStorage.getItem('token').then(value=>{
+      setUserToken(value) 
+  })
+},
+  
+  signOut: () => {
+   
+    AsyncStorage.clear()
+    setUserToken(null);
+    
+   
+  },
+ 
+ 
+}),[]);
+   
+  useEffect(() => {
+  
+    setTimeout(() => {
+       setIsLoading(false);
+       
+      
+    }, 500);
+  }, []);
+  
+  if(isLoading){
+    return(
+      <View style={{flex:1,justifyContent:'center',alignContent:'center'}}>
+           <ActivityIndicator size='small' color="#3a7dda" />
+      </View>
+       
+  
+    )
+  }
   
   return(
+    <AuthContext.Provider value={authContext}>
+  <NavigationContainer>
+   
+    <Calander>
+    <Context>
     <PaperProvider theme={theme}>
-    <App />
+      {userToken !==null?<HomeStackScreen/>:<App />}
   </PaperProvider>
+  </Context>
+  </Calander>
+  
+  </NavigationContainer>
+  </AuthContext.Provider>
   )
 }
 
 const HomeStackScreen=()=>{
   return(
     <HomeStack.Navigator initialRouteName='Home'>
+      
       <HomeStack.Screen name="Home" component={HomeScreen} options={{headerShown:false}}/>
       <HomeStack.Screen name="Procurement" component={Home2Screen} options={{headerShown:false}}/>
       <HomeStack.Screen name="Supplier" component={SupplierScreen} options={{headerShown:false}}/>
@@ -71,16 +136,18 @@ const HomeStackScreen=()=>{
 
 
 function App() {
+  
+
+
   return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName='Intro'>
-        <Stack.Screen name="Intro" component={IntroScreen} options={{headerShown:false}}/>
+   
+      <Stack.Navigator initialRouteName={'Login'}>
+     
         <Stack.Screen name="Login" component={LoginScreen} options={{headerShown:false}}/>
         <Stack.Screen name="Otp" component={OtpScreen} options={{headerShown:false}}/>
-        <Stack.Screen name="Home" component={HomeStackScreen} options={{headerShown:false}}/>
 
       </Stack.Navigator>
-    </NavigationContainer>
+    
   );
 }
 

@@ -1,14 +1,17 @@
 import React from 'react'
 import { StyleSheet, Text, View,TouchableOpacity,Image } from 'react-native'
+import { AntDesign,FontAwesome,MaterialCommunityIcons,Foundation,Feather,Entypo,FontAwesome5} from '@expo/vector-icons';
 
 
-const Home2Box = ({navigation,Title,image,value,nav}) => {
+const Home2Box = ({navigation,Title,image,value,nav,fo,loc,ic}) => {
 
    switch (value) {
        case 'left':
            return <TouchableOpacity style={styles.MainView} onPress={()=>navigation.navigate(nav)}>
            <View style={styles.imageview}>
-               <Image source={image} style={styles.image}/>
+               {fo?<Foundation name="results-demographics" size={45} color="#fff" />:
+               ic?<Foundation name="clipboard-notes" size={45} color="#fff" />:
+           <FontAwesome name="line-chart" size={40} color="#fff" />}
                <Text style={styles.Text}>{Title}</Text>
            </View>
         </TouchableOpacity>
@@ -17,7 +20,8 @@ const Home2Box = ({navigation,Title,image,value,nav}) => {
             return <TouchableOpacity style={styles.MainView} onPress={()=>navigation.navigate(nav)}>
             <View style={styles.imageview}>
                 <Text style={styles.Text}>{Title}</Text>
-                <Image source={image} style={styles.image2}/>
+                {loc?<Entypo name="location" size={40} color="#fff" />:
+                <Feather name="layers" size={40} color="#fff" />}
                
             </View>
          </TouchableOpacity>

@@ -5,26 +5,47 @@ import { AnimatedCircularProgress} from 'react-native-circular-progress';
 
 
 
-const ProgressBar = ({navigation,title,percent,nav}) => {
+const ProgressBar = ({navigation,title,percent,nav,id,screen}) => {
 const [per, setper] = useState(false)
+const [color, setcolor] = useState({
+  bColor:'white',
+  tintColor:'white'
+})
 
+useEffect(() => {
 
-
+    if(percent>=75){
+      setcolor({
+        bColor:'gray',
+        tintColor:'#009900'
+      })
+    }else if(percent>=50 && percent<75){
+      setcolor({
+        bColor:'gray',
+        tintColor:'#FF9900'
+      })
+    }else if(percent<50){
+      setcolor({
+        bColor:'gray',
+        tintColor:'#FF0000'
+      })
+    }
+}, [percent])
 
 
 return (
-  <Card style={{width:'90%',alignSelf:'center',marginTop:'5%',}} onPress={()=>navigation.navigate(nav)}>
+  <Card style={{width:'90%',alignSelf:'center',marginBottom:'5%'}} onPress={()=>navigation.navigate(nav,{id:id,screen:screen,title:title})}>
     <Card.Content >
-      <Title style={{fontFamily:'Lato_700Bold'}}>{title}</Title>
+      <Text style={{fontFamily:'Lato_400Regular',fontSize:18}}>{title}</Text>
       <Divider style={{top:10,borderWidth:0.3,borderColor:'lightgray'}}/>
       <View style={{position:'relative'}}>
       <AnimatedCircularProgress
   size={130}
   width={25}
   fill={percent}
-  tintColor="#3a7dda"
+  tintColor={color.tintColor}
   onAnimationComplete={() => setper(true)}
-  backgroundColor="#97BFF6"
+  backgroundColor={color.bColor}
   style={{alignSelf:'center',marginTop:'8%',marginBottom:'2%'}}
   
  >

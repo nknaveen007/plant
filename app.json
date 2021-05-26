@@ -1,10 +1,10 @@
 {
   "expo": {
-    "name": "my_App2",
-    "slug": "my_App2",
+    "name": "MOP",
+    "slug": "mop",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon1.png",
+    "icon": "./assets/appIcon.png",
     "splash": {
       "image": "./assets/splash1.png",
       "resizeMode": "contain",
@@ -17,15 +17,19 @@
       "**/*"
     ],
     "ios": {
-      
       "supportsTablet": true
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/icon1.png",
+        "foregroundImage": "./assets/appIcon.png",
         "backgroundColor": "#FFFFFF"
       },
-      "package": "com.naveengit.my_App2"
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyAF8Vrwsf7fnhfPUCUv84velNnE31ybylM"
+        }
+      },
+      "package": "com.tata.mop"
     },
     "web": {
       "favicon": "./assets/favicon.png"
