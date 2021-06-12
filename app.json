@@ -18,9 +18,10 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "config":{
-        "googleMapsApiKey":"AIzaSyBfhIp3OPdZ1UxGuDZDP4dKIWr_Sy-ojwU"
-      }
+      "config": {
+        "googleMapsApiKey": "AIzaSyBfhIp3OPdZ1UxGuDZDP4dKIWr_Sy-ojwU"
+      },
+      "bundleIdentifier": "com.tata.mop"
     },
     "android": {
       "adaptiveIcon": {

@@ -1,5 +1,5 @@
-import React,{useState,useEffect,useref} from 'react'
-import { StyleSheet, Text, View,ImageBackground,Image,ToastAndroid,Platform, TouchableOpacity } from 'react-native'
+import React,{useState,useEffect,useref,useCallback} from 'react'
+import { StyleSheet, Text, View,ImageBackground,Image,ToastAndroid,Platform, TouchableOpacity,Alert,BackHandler, useWindowDimensions } from 'react-native'
 import TextInputView from '../Components/Login/TextInput'
 import { Button,Checkbox } from 'react-native-paper';
 import {Lato_400Regular,Lato_700Bold,Lato_900Black,useFonts,Lato_700Bold_Italic,Lato_400Regular_Italic} from '@expo-google-fonts/lato';
@@ -9,14 +9,45 @@ import instance from '../Api/api';
 import LoadView from '../Components/LoadView';
 import * as WebBrowser from 'expo-web-browser';
 import {useToast} from "react-native-fast-toast";
+import { useFocusEffect } from '@react-navigation/core';
+import axios from 'axios'
+
+
 
 const LoginScreen = ({navigation}) => {
-     
+     const {width,height}=useWindowDimensions()
     const [emailText, setemailText] = useState('')
     const [passwordText, setpasswordText] = useState('')
     const [loader, setloader] = useState(false)
-    const [checked, setChecked] = React.useState(false);
+    const [checked, setChecked] = useState(false);
     const toast = useToast()
+   
+    let buttonTopMargin=''
+    if(Platform.OS=='ios'){
+      buttonTopMargin=height-180
+    }else{
+      buttonTopMargin=height-150
+    }
+
+    
+
+    useFocusEffect(
+        useCallback(() => {  
+          const onBackPress = () => {
+           BackHandler.exitApp()
+           return true
+          };
+      
+          BackHandler.addEventListener(
+            'hardwareBackPress', onBackPress
+          );
+      
+          return () =>
+            BackHandler.removeEventListener(
+              'hardwareBackPress', onBackPress
+            );
+        }, [])
+      );
 
     let [fontsLoaded] = useFonts({
         Lato_900Black,Lato_400Regular,Lato_700Bold,Lato_700Bold_Italic,Lato_400Regular_Italic
@@ -41,7 +72,19 @@ const LoginScreen = ({navigation}) => {
                           if(checked){
                             setloader(true)
                             try {
-                                const result =await instance.post('/userLogin',{
+                            /*  let da={email:emailText,
+                                password:passwordText}
+                              let bodyFormData = new FormData();
+                              bodyFormData.append('data', JSON.stringify(da));
+                              
+                            const result=await  axios({
+                                method: "post",
+                                url: "https://mop.tataadvancedsystems.com/api/userLogin",
+                                data: bodyFormData,
+                                headers: { "Content-Type": "multipart/form-data" },
+                              })
+                               console.log(result.data)*/
+                              const result =await instance.post('/userLogin',{
                                     email:emailText,
                                     password:passwordText
                                 })
@@ -196,15 +239,20 @@ const LoginScreen = ({navigation}) => {
            </View>
            
 
-           </View>
 
- 
-           </ImageBackground>
-           <View style={{marginTop:'160%',position:'absolute',right:'5%'}}>
+           </View>
+           <View style={{right:'5%',alignSelf:'flex-end',marginTop:buttonTopMargin}}>
            <Button  mode='outlined' labelStyle={{textTransform:'none',fontSize:17,fontFamily:'Lato_700Bold'}} onPress={() => Validation()} color='#FFFFFF'  style={{borderColor:'#fff',width:120,borderWidth:1.5,}}>
                 Login
            </Button>
+          {Platform.OS=='ios'?
+           <Button  mode='outlined' labelStyle={{textTransform:'none',fontSize:17,fontFamily:'Lato_700Bold'}} onPress={() => navigation.navigate('SignUp')} color='#FFFFFF'  style={{borderColor:'#fff',width:120,borderWidth:1.5,marginTop:'3%'}}>
+                SignUp
+           </Button>:null}
   </View>
+ 
+           </ImageBackground>
+          
         </View>
     )
 }

@@ -17,17 +17,17 @@ const [color, setcolor] = useState({
     setprog(value)
     if(percent>=75){
       setcolor({
-        bColor:'gray',
+        bColor:'lightgray',
         tintColor:'#009900'
       })
     }else if(percent>=50 && percent<75){
       setcolor({
-        bColor:'gray',
+        bColor:'lightgray',
         tintColor:'#FF9900'
       })
     }else if(percent<50){
       setcolor({
-        bColor:'gray',
+        bColor:'lightgray',
         tintColor:'#FF0000'
       })
     }

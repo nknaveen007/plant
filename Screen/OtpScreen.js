@@ -171,6 +171,7 @@ const OtpScreen = ({navigation,route}) => {
                         }
                         value={value1}
                         keyboardType='phone-pad'
+                        enablesReturnKeyAutomatically
                         />
                      </View>
 

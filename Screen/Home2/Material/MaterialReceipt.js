@@ -21,6 +21,7 @@ const MaterialReceipt = ({navigation}) => {
                 const result=await instance.post('/materiallist')
                  setdata(result.data.data)
                  setloader(false)
+                 console.log(result.data)
             } catch (error) {
                 console.log(error)
                 setloader(false)

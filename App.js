@@ -21,6 +21,7 @@ import IcMapScreen from './Screen/Initallation/Location/IcMapScreen';
 import { AuthContext, Calander, CalanderContext, Context} from './context/Context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {ToastProvider} from "react-native-fast-toast";
+import SignUpScreen from './Screen/SignUpScreen';
 
 
 
@@ -91,7 +92,7 @@ const main=()=>{
   
     )
   }
-  
+  //trail for auth
   return(
     <AuthContext.Provider value={authContext}>
   <NavigationContainer>
@@ -99,7 +100,7 @@ const main=()=>{
     <Calander>
     <Context>
     <PaperProvider theme={theme}>
-      {userToken !==null?<HomeStackScreen/>:<App />}
+      {userToken !==null?<HomeStackScreen/>:<App/>}
   </PaperProvider>
   </Context>
   </Calander>
@@ -146,6 +147,7 @@ function App() {
         
      
         <Stack.Screen name="Login" component={LoginScreen} options={{headerShown:false}}/>
+        <Stack.Screen name="SignUp" component={SignUpScreen} options={{headerShown:false}}/>
         <Stack.Screen name="Otp" component={OtpScreen} options={{headerShown:false}}/>
         
       </Stack.Navigator>

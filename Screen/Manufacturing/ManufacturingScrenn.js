@@ -35,7 +35,8 @@ const ManufacturingScrenn = ({navigation}) => {
                 setloader(false)
 
             } catch (error) {
-                console.log(error)
+                alert(error)
+                setloader(false)
             }
         })();
        

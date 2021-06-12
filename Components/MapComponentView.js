@@ -15,9 +15,12 @@ const MapComponentView = ({filterData,statedata}) => {
   const stateLocationData=[
     {name:'Andhra Pradesh',location:{latitude:15.91,longitude:79.74}},
     {name:'Arunachal Pradesh',location:{latitude:28.21,longitude:94.72}},
+    {name:'Andaman and Nicobar Islands',location:{latitude:11.74,longitude:92.65}},
     {name:'Assam',location:{latitude:26.20,longitude:92.93}},
     {name:'Bihar',location:{latitude:25.09,longitude:85.31}},
+    {name:'Chandigarh',location:{latitude:30.73,longitude:76.77}},//newt
     {name:'Chhattisgarh',location:{latitude:21.27,longitude:81.86}},
+    {name:'Delhi',location:{latitude:28.70,longitude:77.10}},//new t
     {name:'Goa',location:{latitude:15.29,longitude:74.12}},
     {name:'Gujarat',location:{latitude:22.25,longitude:71.19}},
     {name:'Haryana',location:{latitude:29.05,longitude:76.08}},
@@ -37,11 +40,19 @@ const MapComponentView = ({filterData,statedata}) => {
     {name:'Rajasthan',location:{latitude:27.02,longitude:74.21}},
     {name:'Sikkim',location:{latitude:27.53,longitude:88.51}},
     {name:'Tamil Nadu',location:{latitude:11.12,longitude:78.65}},
+    {name:'Telangana',location:{latitude:18.11,longitude:79.01}},//new t
     {name:'Tripura',location:{latitude:23.94,longitude:91.98}},
     {name:'Uttarakhand',location:{latitude:30.06,longitude:79.01}},
     {name:'Uttar Pradesh',location:{latitude:26.84,longitude:80.94}},
     {name:'West Bengal',location:{latitude:22.98,longitude:87.85}},
+    {name:'Dadra, Nagar Haveli, Daman, Diu',location:{latitude:20.18,longitude:73.01}},//new
+    {name:'Lakshadweep',location:{latitude:10.56,longitude:72.64}},//new t
+    {name:'Puducherry',location:{latitude:11.94,longitude:79.80}},//new t
+    {name:'Ladakh',location:{latitude:34.22,longitude:77.56}},//new t
    
+    
+   
+    
   ]
 
   useEffect(() => {
@@ -131,15 +142,6 @@ initialRegion={{
       <DataTable.Cell numeric><Text style={styles.value}>{stateData.state}</Text></DataTable.Cell>
     </DataTable.Row>
 
-    <DataTable.Row>
-      <DataTable.Cell><Text style={styles.TitleText}>City</Text></DataTable.Cell>
-      <DataTable.Cell numeric><Text style={styles.value}>{stateData.city}</Text></DataTable.Cell>
-    </DataTable.Row>
-
-    <DataTable.Row>
-      <DataTable.Cell><Text style={styles.TitleText}>Location</Text></DataTable.Cell>
-      <DataTable.Cell numeric><Text style={styles.value}>{stateData.location}</Text></DataTable.Cell>
-    </DataTable.Row>
 
     <DataTable.Row>
       <DataTable.Cell><Text style={styles.TitleText}>Planned</Text></DataTable.Cell>

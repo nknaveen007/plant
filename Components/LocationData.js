@@ -10,14 +10,15 @@ const LocationData = ({state, city, Planned,location, installed}) => {
                <Text style={styles.text}>City  /  State </Text>
                <Text style={styles.textvalue}>: {city}  / {state}</Text>
             </View>
-            <View style={styles.textrowview}>
-               <Text style={styles.text}>Location  </Text>
-               <Text style={styles.textvalue}>:  {location}</Text>
+            <View style={styles.textrowviewlocation}>
+               <Text style={styles.text}>Location</Text>
+               <Text >:</Text>
+               <Text style={styles.textvalueLocation}>{location}</Text>
             </View>
         <View style={{flexDirection:'row',justifyContent:'space-between'}}>
             <View style={styles.textrowview}>
                <Text style={styles.text}>Plants Planned  </Text>
-               <Text style={styles.textvalue}>:  {Planned}</Text>
+               <Text style={styles.textvalue}>:   {Planned}</Text>
             </View>
             <View style={styles.textrowview}>
                <Text style={styles.text}>Installed </Text>
@@ -46,5 +47,17 @@ const styles = StyleSheet.create({
     },
     textvalue:{
         fontFamily:'Lato_400Regular'
+    },
+    textvalueLocation:{
+        fontFamily:'Lato_400Regular',
+        flex:2,
+        left:3
+    },
+    textrowviewlocation:{
+        flexDirection:'row',
+        alignItems:'center',
+        marginTop:'3%',
+        
+        
     }
 })

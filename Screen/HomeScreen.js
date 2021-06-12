@@ -53,7 +53,7 @@ const HomeScreen = ({navigation}) => {
            <Image source={require('../assets/TataLogo.png')} style={{width:200,height:61,alignSelf:'center',top:'3%'}}/>
 
            <View style={{flex:1,marginTop:'10%',alignItems:'center'}}>
-               <HomeView Title={'Procurement'} Text1={`${data.procurement_placed} procurement placed`} Text2={`${data.procurement_sets_completed} Sets completed`} navigation={navigation} ButtonName={'Track'} nav='Procurement'/>
+               <HomeView Title={'Procurement'} Text1={`PO placed for ${data.procurement_placed} sets`} Text2={`Material Receipt for ${data.procurement_sets_completed} sets completed`} navigation={navigation} ButtonName={'Track'} nav='Procurement'/>
                <HomeView Title={'Manufacturing'} Text1={`${data.manufacturing_sets_completed} sets completed`} Text2={`${data.manufacturing_sets_under_progress} sets under progress`} navigation={navigation} ButtonName={'Track'} nav='Manufacture'/>
                <HomeView Title={'Despatches'} Text1={`${data.despatched_sets} despatched sets`} Text2={''} navigation={navigation} ButtonName={'Track'} nav='Despatch'/>
                <HomeView Title={'Installation & Commissioning'} Text1={`${data.sets_delivered} sets delivered`} Text2={''} navigation={navigation} ButtonName={'Track'} nav='Install'/>
